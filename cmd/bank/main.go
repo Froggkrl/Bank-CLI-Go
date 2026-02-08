@@ -1,6 +1,7 @@
 package main
 
 import (
+	"BankCLI/internal/config"
 	"BankCLI/internal/funcs"
 	"BankCLI/pkg/models"
 	"bufio"
@@ -12,9 +13,16 @@ import (
 var currentAccount *models.Account
 
 func main() {
-	fmt.Print(strings.Repeat("=== ", 2))
-	fmt.Print("Bank CLI Go")
-	fmt.Println(strings.Repeat(" === ", 2))
+
+	if err := config.Init(); err != nil {
+		fmt.Printf("Ошибка: %w", err)
+	}
+
+	cfg := config.GetConfig()
+
+	fmt.Print(strings.Repeat("===", 5))
+	fmt.Printf("%s %s", cfg.AppName, cfg.Version)
+	fmt.Print(strings.Repeat("=== ", 5))
 
 	currentAccount = funcs.CreateDemoAcc()
 
